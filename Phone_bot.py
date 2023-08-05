@@ -1,8 +1,10 @@
 ADRESSBOOK = {}
 
 def input_error(inner):
-    def wrap(*args):
-        try:
+    def wrap(*args):        
+        try:            
+            if (inner(*args)) == None:
+                return 'Unknown command'
             return inner(*args)
         except KeyError:
             return "This name is not in the address book"
@@ -45,6 +47,7 @@ def exit_hundler(*args):         # Завершення роботи
 def hello_hundler(*args):        # Привітання
     return 'How can I help you?'
 
+@input_error
 def command_parser(raw_str: str): # Парсер команд
     elements = raw_str.split()    
     for key, value in COMMANDS.items():
@@ -55,7 +58,7 @@ def command_parser(raw_str: str): # Парсер команд
                 del elements[1]
         if elements[0].lower() in value:
             return key(elements[1:])    
-    return 'Unknown command'        # Повертаэмо помилку, якщо команду не розпізнано 
+    # return 'Unknown command'        # Повертаэмо помилку, якщо команду не розпізнано 
     
 COMMANDS = {
     add_hundler: ['add', '+'],
