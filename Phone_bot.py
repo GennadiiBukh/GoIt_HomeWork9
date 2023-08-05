@@ -17,22 +17,24 @@ def input_error(inner):
 @input_error
 def add_hundler(data):      # Функція додавання контакту з номером тел.
     name = data[0].title()
-    phone = int(data[1])    # Провокуємо помилку ValueError якщо тел. містить не тільки цифри або IndexError якщо тел. не введено
+    phone_test = int(data[1])    # Провокуємо помилку ValueError якщо тел. містить не тільки цифри або IndexError якщо тел. не введено
+    phone = data[1]
     ADRESSBOOK[name] = phone    
     return 'Done'
 
 @input_error
 def change_hundler(data):    # Функція зміни номеру тел. контакту
     name = data[0].title()
-    phone = ADRESSBOOK[name] # Провокуємо помилку KeyError якщо такого контакту немає
-    new_phone = int(data[1]) # Провокуємо помилку ValueError якщо тел. містить не тільки цифри або IndexError якщо тел. не введено
+    phone_test = ADRESSBOOK[name] # Провокуємо помилку KeyError якщо такого контакту немає
+    phone_test = int(data[1]) # Провокуємо помилку ValueError якщо тел. містить не тільки цифри або IndexError якщо тел. не введено
+    new_phone = data[1]
     ADRESSBOOK[name] = new_phone
     return 'Done'         
     
 @input_error
 def phone_hundler(data):      # Функція отримання номеру тел. за іменем контакту
     name = data[0].title()
-    phone = ADRESSBOOK[name]  # Провокуємо помилку KeyError якщо такого контакту немає
+    phone = ADRESSBOOK[name]  # Буде помилка KeyError якщо такого контакту немає
     return phone
     
 def showall_hundler(data):      # Функція виводу всього переліку контактів з номерами тел.
@@ -58,7 +60,7 @@ def command_parser(raw_str: str): # Парсер команд
                 del elements[1]
         if elements[0].lower() in value:
             return key(elements[1:])    
-    # return 'Unknown command'        # Повертаэмо помилку, якщо команду не розпізнано 
+    # return 'Unknown command'         
     
 COMMANDS = {
     add_hundler: ['add', '+'],
